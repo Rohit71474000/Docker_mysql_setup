@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mysql-master:
+    image: mysql:8.0.42
+    container_name: mysql-master
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Mysql@123
+    volumes:
+      - ./master/data:/var/lib/mysql
+      - ./master/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql-net
+
+  mysql-replica:
+    image: mysql:8.0.42
+    container_name: mysql-replica
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Mysql@123
+    volumes:
+      - ./replica/data:/var/lib/mysql
+      - ./replica/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    ports:
+      - "3308:3306"
+    networks:
+      - mysql-net
+
+networks:
+  mysql-net:
+    external: true
+
