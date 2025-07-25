@@ -1,0 +1,25 @@
+name: Apply SQL to Docker MySQL
+
+on:
+  push:
+    paths:
+      - 'sql/*.sql'
+
+jobs:
+  run-sql-on-server:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Connect via SSH and apply SQL
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          docker cp ./sql/001_create_table.sql mysql-master:/tmp/
+          docker exec mysql-master bash -c "mysql -uroot -pMysql@123 < /tmp/001_create_table.sql"
+
