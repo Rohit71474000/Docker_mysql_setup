@@ -31,3 +31,4 @@ Role	 Username	Password
 
 Root 	 root    	Mysql@123
 Replica	 replica  	Replica@123
+# Test trigger for SSH
