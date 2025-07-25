@@ -1,0 +1,28 @@
+name: Apply SQL to Docker MySQL
+
+on:
+  push:
+    paths:
+      - 'sql/*.sql'
+
+jobs:
+  apply-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: SSH and run SQL files on Docker MySQL
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          mkdir -p /tmp/sql
+          rm -rf /tmp/sql/*
+          cp -r ~/Docker_mysql_setup/sql/*.sql /tmp/sql/
+          for sql_file in /tmp/sql/*.sql; do
+            docker exec -i mysql-master mysql -uroot -pMysql@123 < "$sql_file"
+          done
