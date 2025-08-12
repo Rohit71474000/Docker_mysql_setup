@@ -1,9 +1,6 @@
 name: Create Database and Table
 
-on:
-  push:
-    paths:
-      - 'sql/create_db_and_table.sql'
+on: push
 
 jobs:
   create-db:
