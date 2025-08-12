@@ -3,7 +3,7 @@ name: Create Database and Table
 on:
   push:
     paths:
-      - '/backup/Docker_mysql_setup/sql/create_db_and_table.sql'
+      - 'sql/create_db_and_table.sql'
 
 jobs:
   create-db:
