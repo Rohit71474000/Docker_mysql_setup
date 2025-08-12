@@ -16,7 +16,7 @@ jobs:
       - name: Run SQL script to create DB and table
         env:
           MYSQL_ROOT_PASSWORD: Mysql@123
-          MYSQL_HOST: mysql-master
+          MYSQL_HOST: 172.18.0.2
         run: |
           mysql -h $MYSQL_HOST -u root -p$MYSQL_ROOT_PASSWORD < sql/create_db_and_table.sql
 
