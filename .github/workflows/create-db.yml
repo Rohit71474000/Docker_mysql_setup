@@ -1,0 +1,25 @@
+name: Create Database and Table
+
+on:
+  push:
+    paths:
+      - '/backup/Docker_mysql_setup/sql/create_db_and_table.sql'
+
+jobs:
+  create-db:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install MySQL client
+        run: sudo apt-get update && sudo apt-get install -y mysql-client
+
+      - name: Run SQL script to create DB and table
+        env:
+          MYSQL_ROOT_PASSWORD: Mysql@123
+          MYSQL_HOST: mysql-master
+        run: |
+          mysql -h $MYSQL_HOST -u root -p$MYSQL_ROOT_PASSWORD < sql/create_db_and_table.sql
+
