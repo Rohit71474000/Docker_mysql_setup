@@ -1,3 +1,5 @@
+on: push
+
 jobs:
   create-db:
     runs-on: ubuntu-latest
